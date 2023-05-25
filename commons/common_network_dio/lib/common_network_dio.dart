@@ -1,0 +1,1 @@
+export 'src/dio_rest_client.dart';

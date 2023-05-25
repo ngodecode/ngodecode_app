@@ -1,0 +1,1 @@
+export 'src/resource/image_resources.dart';

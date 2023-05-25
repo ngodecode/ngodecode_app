@@ -1,0 +1,5 @@
+name: ngodecode_app
+packages:
+  - commons/**
+  - features/**
+  - lib/**

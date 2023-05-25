@@ -1,0 +1,25 @@
+name: payment_data
+description: A new Flutter project.
+
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=2.18.6 <3.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  payment_domain:
+    path: ../payment_domain
+  common_network:
+    path: ../../../commons/common_network
+  common_data:
+    path: ../../../commons/common_data
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+

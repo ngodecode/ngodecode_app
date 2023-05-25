@@ -1,0 +1,12 @@
+# Register bricks which can be consumed via the Mason CLI.
+# https://github.com/felangel/mason
+bricks:
+  data:
+    path: ./bricks/data
+
+  domain:
+    path: ./bricks/domain
+
+  data_impl:
+    path: ./bricks/data_impl
+

@@ -1,0 +1,35 @@
+name: payment_feature
+description: A new Flutter project.
+
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=2.18.6 <3.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  common_network_dio:
+    path: ../../commons/common_network_dio
+  common_di:
+    path: ../../commons/common_di
+  common_ui:
+    path: ../../commons/common_ui
+  common_router:
+    path: ../../commons/common_router
+
+  payment_domain:
+    path: payment_domain
+  payment_data:
+    path: payment_data
+  payment_ui:
+    path: payment_ui
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^2.0.1
+  build_runner: ^2.3.3

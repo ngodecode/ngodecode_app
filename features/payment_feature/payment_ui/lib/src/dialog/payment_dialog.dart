@@ -25,7 +25,7 @@ class PaymentDialog extends StatefulWidget {
     this.tax,
   });
 
-  final Function()? onDismiss;
+  final Function(BuildContext context)? onDismiss;
   final int productId;
   final int variantId;
   final String? productName;
@@ -77,7 +77,6 @@ class _PaymentDialogState extends State<PaymentDialog> with Injectable {
       width: context.matchWidth(percent: 0.4),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           _header(),
           const SizedBox(height: 16),
@@ -90,7 +89,10 @@ class _PaymentDialogState extends State<PaymentDialog> with Injectable {
                   child: state.isPageMethod()
                       ? _selectMethodOptions()
                       : state.isPageConfirm()
-                          ? _orderConfirmation(state.email.orEmpty())
+                          ? _orderConfirmation(
+                              state.email.orEmpty(),
+                              state.isSubmitting.orFalse(),
+                            )
                           : _orderCompleted(state.email.orEmpty()),
                 ),
               );
@@ -98,7 +100,10 @@ class _PaymentDialogState extends State<PaymentDialog> with Injectable {
           ),
           const DividerLineSeparator(),
           const SizedBox(height: 24),
-          _button(),
+          Align(
+            alignment: Alignment.centerRight,
+            child: _button(),
+          ),
         ],
       ),
     );
@@ -119,7 +124,7 @@ class _PaymentDialogState extends State<PaymentDialog> with Injectable {
           );
         }),
         InkWell(
-          onTap: widget.onDismiss,
+          onTap: () => widget.onDismiss?.call(context),
           child: const Icon(
             Icons.close,
             color: CommonColors.textBodyColor,
@@ -228,7 +233,18 @@ class _PaymentDialogState extends State<PaymentDialog> with Injectable {
     );
   }
 
-  Widget _orderConfirmation(String email) {
+  Widget _orderConfirmation(String email, bool isSubmitting) {
+    if (isSubmitting) {
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: const [
+          SizedBox(height: 42),
+          CircularProgressIndicator(),
+          SizedBox(height: 16),
+          Text("Please wait, we were still processing your request.")
+        ],
+      );
+    }
     final total = widget.tax.orZero() + widget.price.orZero();
     return Column(
       children: [
@@ -332,6 +348,9 @@ class _PaymentDialogState extends State<PaymentDialog> with Injectable {
 
   Widget _button() {
     return BlocBuilder<PaymentBloc, PaymentState>(builder: (context, state) {
+      if (state.isSubmitting.orFalse()) {
+        return const SizedBox();
+      }
       return TextButtonFilled.primary(
         state.isPageMethod()
             ? "Next"
@@ -370,7 +389,7 @@ class _PaymentDialogState extends State<PaymentDialog> with Injectable {
             ),
           );
     } else {
-      widget.onDismiss?.call();
+      widget.onDismiss?.call(context);
     }
   }
 }

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'common_route.dart';
 
 abstract class CommonRouteNavigator {
 

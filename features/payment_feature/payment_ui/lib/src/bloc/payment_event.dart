@@ -14,11 +14,13 @@ class SubmitInstantPay extends PaymentEvent {
     required this.productId,
     required this.variantId,
     required this.email,
+    this.onError,
   });
 
   int productId;
   int variantId;
   String email;
+  Function(dynamic)? onError;
 }
 
 class SubmitSaveToAccount extends PaymentEvent {}

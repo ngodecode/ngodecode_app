@@ -1,8 +1,6 @@
-import 'dart:convert';
-import 'dart:io';
-
 import 'package:common_network/common_network.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 
 final dioLoggerInterceptor = InterceptorsWrapper(onRequest: (RequestOptions options, handler) {
   String headers = "";
@@ -10,20 +8,20 @@ final dioLoggerInterceptor = InterceptorsWrapper(onRequest: (RequestOptions opti
     headers += "| $key: $value";
   });
 
-  print("┌------------------------------------------------------------------------------");
-  print('''| [DIO] Request: ${options.method} ${options.uri}
+  debugPrint("┌------------------------------------------------------------------------------");
+  debugPrint('''| [DIO] Request: ${options.method} ${options.uri}
 | ${options.data.toString()}
 | Headers:\n$headers''');
-  print("├------------------------------------------------------------------------------");
+  debugPrint("├------------------------------------------------------------------------------");
   handler.next(options);  //continue
 }, onResponse: (Response response, handler) async {
-  print("| [DIO] Response [code ${response.statusCode}]: ${response.data.toString()}");
-  print("└------------------------------------------------------------------------------");
+  debugPrint("| [DIO] Response [code ${response.statusCode}]: ${response.data.toString()}");
+  debugPrint("└------------------------------------------------------------------------------");
   handler.next(response);
   // return response; // continue
 }, onError: (DioError error, handler) async {
-  print("| [DIO] Error: ${error.error}: ${error.response.toString()}");
-  print("└------------------------------------------------------------------------------");
+  debugPrint("| [DIO] Error: ${error.error}: ${error.response.toString()}");
+  debugPrint("└------------------------------------------------------------------------------");
   handler.next(error); //continue
 });
 
@@ -36,7 +34,9 @@ class DioRestClient extends RestClient {
       receiveTimeout: 60 * 1000,
       sendTimeout: 60 * 1000,
     ));
-    _dio.interceptors.add(dioLoggerInterceptor);
+    if (kDebugMode) {
+      _dio.interceptors.add(dioLoggerInterceptor);
+    }
   }
 
   late final Dio _dio;

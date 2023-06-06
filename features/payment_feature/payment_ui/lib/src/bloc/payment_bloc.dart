@@ -26,16 +26,21 @@ class PaymentBloc extends Bloc<PaymentEvent, PaymentState> {
   }
 
   _submitInstantPay(SubmitInstantPay event, Emitter emit) async {
-    emit(state.copyWith(isSubmitting: true));
-    final result = await _createInvoiceUseCase(
-      productId: event.productId,
-      variantId: event.variantId,
-      email: event.email,
-    );
-    await _sendInvoiceMailUseCase(invoiceId: result.id.orEmpty());
-    emit(state.copyWith(
-      isSubmitting: false,
-      invoice: result,
-    ));
+    try {
+      emit(state.copyWith(isSubmitting: true));
+      final result = await _createInvoiceUseCase(
+        productId: event.productId,
+        variantId: event.variantId,
+        email: event.email,
+      );
+      await _sendInvoiceMailUseCase(invoiceId: result.id.orEmpty());
+      emit(state.copyWith(
+        isSubmitting: false,
+        invoice: result,
+      ));
+    } catch (e) {
+      emit(state.copyWith(isSubmitting: false, error: e));
+    }
+
   }
 }

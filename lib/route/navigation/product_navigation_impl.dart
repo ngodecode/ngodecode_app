@@ -1,6 +1,7 @@
 import 'package:common_router/common_router.dart';
 import 'package:flutter/material.dart';
 import 'package:ngodecode_app/route/routes.dart';
+import 'package:payment_feature/payment_feature.dart';
 import 'package:product_feature/product_feature.dart';
 
 class ProductNavigationImpl implements ProductNavigation {
@@ -40,17 +41,22 @@ class ProductNavigationImpl implements ProductNavigation {
     double? price,
     double? tax,
   ) {
-    _navigator.navigateTo(
-      context,
-      _routes.payment.pathAsUrl(query: {
-        "productId": productId,
-        "variantId": variantId,
-        "imageUrl": imageUrl,
-        "productName": productName,
-        "variantName": variantName,
-        "price": price,
-        "tax": tax,
-      }),
+    showDialog(
+      context: context,
+      builder: (context) {
+        return PaymentDialog(
+          productId: productId,
+          variantId: variantId,
+          imageUrl: imageUrl,
+          productName: productName,
+          variantName: variantName,
+          price: price,
+          tax: tax,
+          onDismiss: (context) {
+            _navigator.pop(context);
+          },
+        );
+      },
     );
   }
 

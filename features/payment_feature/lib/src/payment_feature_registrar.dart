@@ -2,8 +2,6 @@ import 'package:common_di/common_di.dart';
 import 'package:common_network_dio/common_network_dio.dart';
 import 'package:common_router/common_router.dart';
 import 'package:common_ui/nullable_extension.dart';
-import 'package:common_ui/number_extension.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:payment_domain/payment_domain.dart';
 import 'package:payment_data/payment_data.dart';
 import 'package:payment_data/payment_data_impl.dart';
@@ -50,13 +48,6 @@ class PaymentFeatureRegistrar extends Registrar {
         return InvoiceDetailPage(
           invoiceId: arguments["invoiceId"].orEmpty(),
         );
-      },
-    });
-
-    builder.registerDialog({
-      route.payment: (navigation) {
-        final arguments = navigation.query ?? {};
-        return const SizedBox();
       },
     });
   }

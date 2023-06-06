@@ -2,7 +2,6 @@ import 'package:common_di/common_di.dart';
 import 'package:common_ui/common_bloc.dart';
 import 'package:common_ui/common_resource.dart';
 import 'package:common_ui/common_style.dart';
-import 'package:common_ui/common_widget.dart';
 import 'package:common_ui/nullable_extension.dart';
 import 'package:common_ui/number_extension.dart';
 import 'package:flutter/material.dart';

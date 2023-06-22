@@ -44,4 +44,6 @@ app.*.map.json
 /android/app/release
 
 # Project exclude paths
-/features/product_feature/product_ui/build/
+**/build/
+**/pubspec_overrides.yaml
+**/pubspec.lock

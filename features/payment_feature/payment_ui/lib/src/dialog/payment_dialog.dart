@@ -235,13 +235,13 @@ class _PaymentDialogState extends State<PaymentDialog> with Injectable {
 
   Widget _orderConfirmation(String email, bool isSubmitting) {
     if (isSubmitting) {
-      return Column(
+      return const Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: const [
+        children: [
           SizedBox(height: 42),
           CircularProgressIndicator(),
           SizedBox(height: 16),
-          Text("Please wait, we were still processing your request.")
+          Text("Please wait, we are processing your request.")
         ],
       );
     }
